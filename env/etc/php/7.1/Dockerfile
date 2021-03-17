@@ -1,5 +1,5 @@
 #PHP IMAGE
-FROM php:7.1-apache-stretch
+FROM php:7.1-fpm-stretch
 
 #SETTING UP THE SYSTEM
 RUN apt-get update \
@@ -111,13 +111,6 @@ RUN chmod -R 700 /root/.ssh \
     && touch /root/.ssh/known_hosts \
     && ssh-keygen -F github.com || ssh-keyscan github.com >> /root/.ssh/known_hosts
 
-#APACHE
-RUN a2enmod ssl \
-    && a2ensite default-ssl.conf \
-    && a2enmod vhost_alias \
-    && a2enmod proxy \
-    && a2enmod rewrite \
-    && chown -R ${_USER}:${_USER} /var/www/html
 RUN chown -R ${_USER}:${_USER} ${_HOME_DIRECTORY}
 
 #BASH COMPLETION
@@ -135,8 +128,6 @@ RUN echo "Defaults    timestamp_timeout=-1" >> /etc/sudoers
 COPY ./etc/git/gitconfig ${_HOME_DIRECTORY}/.gitconfig
 COPY ./etc/composer/auth.json /${_HOME_DIRECTORY}/.composer/auth.json
 COPY ./misc/* /usr/local/bin/
-COPY ./etc/apache/envvars /etc/apache2/envvars
-COPY ./etc/apache /etc/apache2/sites-enabled/
 COPY ./etc/fixtures /etc/fixtures
 COPY ./etc/m2install/.m2install.conf* ${_HOME_DIRECTORY}/
 
@@ -155,4 +146,4 @@ RUN curl -o /usr/local/bin/m2install.sh https://raw.githubusercontent.com/yvoron
 
 RUN chmod +x /usr/local/bin/*
 
-CMD service ssh start; apache2-foreground
+CMD service ssh start

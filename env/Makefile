@@ -50,11 +50,11 @@ logs-elastic6:
 	docker logs -f magento2elastic6
 add-host:
 	echo "127.0.0.1 $(host)" | sudo tee -a /etc/hosts
-	cp etc/apache/vhost.conf.example etc/apache/$(host).conf
-	cat etc/apache/$(host).conf | sed "s/ServerName example.com/ServerName $(host)/" > etc/apache/$(host).conf.tmp
-	mv etc/apache/$(host).conf.tmp etc/apache/$(host).conf
-	cat etc/apache/$(host).conf | sed "s/\/var\/www\/html\/example/\/var\/www\/html\/$(host)/" > etc/apache/$(host).conf.tmp
-	mv etc/apache/$(host).conf.tmp etc/apache/$(host).conf
+	#cp etc/apache/vhost.conf.example etc/apache/$(host).conf
+	#cat etc/apache/$(host).conf | sed "s/ServerName example.com/ServerName $(host)/" > etc/apache/$(host).conf.tmp
+	#mv etc/apache/$(host).conf.tmp etc/apache/$(host).conf
+	#cat etc/apache/$(host).conf | sed "s/\/var\/www\/html\/example/\/var\/www\/html\/$(host)/" > etc/apache/$(host).conf.tmp
+	#mv etc/apache/$(host).conf.tmp etc/apache/$(host).conf
 	docker-compose build
 	docker-compose up -d
 	docker exec -it --user magento magento2web mkdir -p /var/www/html/$(host)
@@ -63,7 +63,7 @@ add-host:
 remove-host:
 	cat /etc/hosts | sed 's/.*$(host)//g' > /tmp/hosts.tmp
 	sudo mv /tmp/hosts.tmp /etc/hosts
-	rm etc/apache/$(host).conf
+	#rm etc/apache/$(host).conf
 	docker-compose build
 	docker-compose up -d
 	docker exec -i --user magento magento2web sh -c "rm /var/www/html/$(host)/.m2install.conf"
