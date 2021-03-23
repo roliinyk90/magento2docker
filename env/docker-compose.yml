@@ -22,6 +22,9 @@ services:
     environment:
       PHP_FPM_USER: magento
       PHP_FPM_GROUP: magento
+      PHP_IDE_CONFIG: serverName=PHPSTORM
+      BLACKFIRE_CLIENT_ID:
+      BLACKFIRE_CLIENT_TOKEN:
     volumes:
       - src-volume:/var/www/html
       - src-composer-cache-volume:/root/.composer/cache
