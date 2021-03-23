@@ -16,9 +16,12 @@ services:
   web:
     container_name: magento2web
     restart: always
-    build: .
     ports:
       - "2222:22"
+    build: .
+    environment:
+      PHP_FPM_USER: magento
+      PHP_FPM_GROUP: magento
     volumes:
       - src-volume:/var/www/html
       - src-composer-cache-volume:/root/.composer/cache

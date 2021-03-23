@@ -30,7 +30,7 @@ xdebugAction()
         || { echo "> ERROR: failed to update ${ini} file ..." 1>&2 && return 1; }
   fi
 
-  /etc/init.d/apache2 reload
+  kill -USR2 1
   php -v
 }
 

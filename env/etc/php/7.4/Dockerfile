@@ -82,7 +82,8 @@ RUN pecl install xdebug-2.9.0 \
     && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.max_nesting_level=10000" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    && echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 COPY ./misc/xdebug-php.sh /usr/local/bin/xdebug-php.sh
 
 #CODESNIFFER
@@ -152,4 +153,4 @@ RUN curl -o /usr/local/bin/m2install.sh https://raw.githubusercontent.com/yvoron
 
 RUN chmod +x /usr/local/bin/*
 
-CMD service ssh start
+CMD ["php-fpm", "--nodaemonize"]
